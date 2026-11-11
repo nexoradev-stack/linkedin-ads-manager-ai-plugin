@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased — 2026-11-11
+
+### Documentation
+
+- README rewritten: banner, badges, feature overview, example prompts, quick start, client connection examples, configuration reference, tool table with risk levels, safety sequence diagram, project structure, troubleshooting table, roadmap and contributors
+- New root `ARCHITECTURE.md` covering components, request lifecycle, safety model, credentials, transports, error model, testing, deployment, design decisions and known limitations; `docs/architecture.md` now points to it
+- New images in `assets/`: `banner.svg`/`banner.png` and `architecture.svg`/`architecture.png`
+- Clone URLs now point at `nexoradev-stack/linkedin-ads-manager-ai-plugin`
+- Roadmap tracked as GitHub issues and milestones
+
+### Notes
+
+- The GitHub Actions workflow listed under 1.0.0 is not currently in the repository (it was removed until the pushing token has `workflow` scope). Restoring it is tracked as an issue.
+
 ## 1.0.0 — 2026-09-29
 
 ### Added

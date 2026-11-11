@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#5AB0FF"/>
+    </marker>
+    <marker id="arrowG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#8FA3BD"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="760" fill="#07182E"/>
+
+  <text x="60" y="58" font-size="26" font-weight="800" fill="#FFFFFF">How a request flows</text>
+  <text x="60" y="86" font-size="15" fill="#8FB0D6">One canonical MCP server · thin client configs · no LinkedIn logic duplicated per client</text>
+
+  <!-- Column labels -->
+  <g font-size="12" font-weight="700" fill="#5AB0FF" letter-spacing="1.5">
+    <text x="60" y="132">1 · AI CLIENTS</text>
+    <text x="330" y="132">2 · TRANSPORT</text>
+    <text x="620" y="132">3 · MCP SERVER  (mcp-server/)</text>
+    <text x="1010" y="132">4 · LINKEDIN</text>
+  </g>
+
+  <!-- Clients -->
+  <g font-size="16" font-weight="700" fill="#FFFFFF">
+    <rect x="60" y="150" width="200" height="62" rx="12" fill="#10294A" stroke="#2C5A92"/>
+    <text x="80" y="178">Claude</text><text x="80" y="198" font-size="12" font-weight="400" fill="#8FB0D6">Desktop · Cowork · connector</text>
+    <rect x="60" y="226" width="200" height="62" rx="12" fill="#10294A" stroke="#2C5A92"/>
+    <text x="80" y="254">ChatGPT</text><text x="80" y="274" font-size="12" font-weight="400" fill="#8FB0D6">remote MCP only</text>
+    <rect x="60" y="302" width="200" height="62" rx="12" fill="#10294A" stroke="#2C5A92"/>
+    <text x="80" y="330">Gemini</text><text x="80" y="350" font-size="12" font-weight="400" fill="#8FB0D6">Gemini CLI · mcpServers</text>
+    <rect x="60" y="378" width="200" height="62" rx="12" fill="#10294A" stroke="#2C5A92"/>
+    <text x="80" y="406">Cursor</text><text x="80" y="426" font-size="12" font-weight="400" fill="#8FB0D6">.cursor/mcp.json</text>
+  </g>
+
+  <!-- Transports -->
+  <g>
+    <rect x="330" y="160" width="230" height="110" rx="14" fill="#0E2442" stroke="#5AB0FF" stroke-opacity="0.6"/>
+    <text x="350" y="190" font-size="17" font-weight="800" fill="#FFFFFF">STDIO</text>
+    <text x="350" y="214" font-size="12.5" fill="#B9CCE4">node dist/index.js --stdio</text>
+    <text x="350" y="236" font-size="12.5" fill="#B9CCE4">Local process, token in .env</text>
+    <text x="350" y="258" font-size="12.5" fill="#B9CCE4">No network port opened</text>
+
+    <rect x="330" y="290" width="230" height="160" rx="14" fill="#0E2442" stroke="#5AB0FF" stroke-opacity="0.6"/>
+    <text x="350" y="320" font-size="17" font-weight="800" fill="#FFFFFF">Streamable HTTP</text>
+    <text x="350" y="344" font-size="12.5" fill="#B9CCE4">POST/GET /mcp · GET /health</text>
+    <g font-size="12" fill="#CFE6FF">
+      <rect x="350" y="356" width="190" height="24" rx="6" fill="#FFFFFF" fill-opacity="0.06"/>
+      <text x="360" y="372">Host allowlist</text>
+      <rect x="350" y="384" width="190" height="24" rx="6" fill="#FFFFFF" fill-opacity="0.06"/>
+      <text x="360" y="400">Optional bearer token</text>
+      <rect x="350" y="412" width="190" height="24" rx="6" fill="#FFFFFF" fill-opacity="0.06"/>
+      <text x="360" y="428">Rate limit 120 req / min</text>
+    </g>
+  </g>
+
+  <!-- MCP Server -->
+  <g>
+    <rect x="620" y="150" width="330" height="448" rx="16" fill="#0B2547" stroke="#5AB0FF"/>
+    <g font-size="12" fill="#B9CCE4">
+      <rect x="640" y="170" width="290" height="70" rx="10" fill="#12305A"/>
+      <text x="656" y="196" font-size="15" font-weight="800" fill="#FFFFFF">Tool registry</text>
+      <text x="656" y="218">31 narrow tools · zod-validated input</text>
+      <text x="656" y="234">no generic "call any API" tool</text>
+
+      <rect x="640" y="252" width="290" height="112" rx="10" fill="#12305A" stroke="#4ADE80" stroke-opacity="0.7"/>
+      <text x="656" y="278" font-size="15" font-weight="800" fill="#4ADE80">Safety gate</text>
+      <text x="656" y="300">Read → runs</text>
+      <text x="656" y="318">Write → needs confirm=true (or trusted mode)</text>
+      <text x="656" y="336">High-risk (spend, launch, targeting, post)</text>
+      <text x="656" y="352" fill="#FFC857">→ preview first, ALWAYS confirm=true</text>
+
+      <rect x="640" y="376" width="290" height="62" rx="10" fill="#12305A"/>
+      <text x="656" y="402" font-size="15" font-weight="800" fill="#FFFFFF">Credentials</text>
+      <text x="656" y="424">env / .env · tokens never returned</text>
+
+      <rect x="640" y="450" width="290" height="62" rx="10" fill="#12305A"/>
+      <text x="656" y="476" font-size="15" font-weight="800" fill="#FFFFFF">LinkedIn client</text>
+      <text x="656" y="498">REST · LinkedIn-Version header · 30s timeout</text>
+
+      <rect x="640" y="524" width="290" height="58" rx="10" fill="#12305A"/>
+      <text x="656" y="548" font-size="15" font-weight="800" fill="#FFFFFF">Redaction + typed errors</text>
+      <text x="656" y="568">secrets scrubbed from logs and tool output</text>
+    </g>
+  </g>
+
+  <!-- LinkedIn APIs -->
+  <g>
+    <rect x="1010" y="170" width="220" height="170" rx="14" fill="#0A66C2" fill-opacity="0.2" stroke="#5AB0FF"/>
+    <text x="1028" y="200" font-size="16" font-weight="800" fill="#FFFFFF">Marketing API</text>
+    <g font-size="12.5" fill="#CFE6FF">
+      <text x="1028" y="224">Accounts · campaigns</text>
+      <text x="1028" y="244">groups · creatives</text>
+      <text x="1028" y="264">targeting · budgets</text>
+      <text x="1028" y="284">adAnalytics</text>
+    </g>
+    <rect x="1028" y="300" width="184" height="26" rx="13" fill="#07182E"/>
+    <text x="1120" y="318" font-size="11.5" font-weight="700" fill="#5AB0FF" text-anchor="middle">rw_ads · r_ads_reporting</text>
+
+    <rect x="1010" y="370" width="220" height="130" rx="14" fill="#FFFFFF" fill-opacity="0.04" stroke="#8FA3BD" stroke-dasharray="6 5"/>
+    <text x="1028" y="400" font-size="16" font-weight="800" fill="#FFFFFF">Community Mgmt API</text>
+    <text x="1028" y="424" font-size="12.5" fill="#CFE6FF">Organization posts</text>
+    <text x="1028" y="444" font-size="12" fill="#8FA3BD">optional · only if posts token set</text>
+    <rect x="1028" y="460" width="184" height="26" rx="13" fill="#07182E"/>
+    <text x="1120" y="478" font-size="11.5" font-weight="700" fill="#8FA3BD" text-anchor="middle">w_organization_social</text>
+  </g>
+
+  <!-- Arrows: clients to transports -->
+  <g stroke="#5AB0FF" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <path d="M260 181 C295 181 300 200 328 205"/>
+    <path d="M260 257 C300 257 300 340 328 350"/>
+    <path d="M260 333 C292 333 300 230 328 225"/>
+    <path d="M260 409 C292 409 300 380 328 375"/>
+    <path d="M560 215 C590 215 592 205 618 205"/>
+    <path d="M560 370 C590 370 592 300 618 300"/>
+    <path d="M950 300 C980 300 985 255 1008 255"/>
+  </g>
+  <path d="M950 470 C980 470 985 435 1008 435" stroke="#8FA3BD" stroke-width="2" fill="none" stroke-dasharray="6 5" marker-end="url(#arrowG)"/>
+
+  <!-- Legacy plugin lane -->
+  <rect x="60" y="620" width="1170" height="96" rx="14" fill="#FFFFFF" fill-opacity="0.03" stroke="#2C5A92" stroke-dasharray="6 5"/>
+  <text x="84" y="652" font-size="15" font-weight="800" fill="#FFFFFF">Claude plugin lane (backwards compatible)</text>
+  <text x="84" y="678" font-size="13" fill="#B9CCE4">/linkedin-setup → linkedin-ads-manager skill → Python CLI scripts (audit, clone, daily report, targeting, creative upload) → LinkedIn APIs</text>
+  <text x="84" y="700" font-size="13" fill="#8FB0D6">Kept for existing Cowork workflows. New integrations should use the MCP server above.</text>
+</svg>
